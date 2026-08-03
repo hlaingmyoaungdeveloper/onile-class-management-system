@@ -1,6 +1,6 @@
 namespace OCMSWindowForm;
 
-partial class Form1
+partial class Main
 {
     private System.ComponentModel.IContainer components = null;
     private System.Windows.Forms.TabControl tabControl;
@@ -184,7 +184,7 @@ partial class Form1
         this.gbSubClassInput.Text = "SubClass Details";
 
         int col1 = 20, col2 = 400, col3 = 780;
-        int row1 = 30, row2 = 90, row3 = 150, row4 = 210;
+        int row1 = 30, row2 = 90, row4 = 210;
         int fieldWidth = 350;
 
         // Hidden ID
@@ -238,9 +238,6 @@ partial class Form1
         this.dtpOpenTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
         this.dtpOpenTime.ShowUpDown = true;
 
-        // Row 3
-
-
         // Row 4
         this.btnSaveSubClass.Location = new System.Drawing.Point(col1, row4);
         this.btnSaveSubClass.Name = "btnSaveSubClass";
@@ -292,6 +289,7 @@ partial class Form1
         this.dgvSubClasses.AllowUserToAddRows = false;
         this.dgvSubClasses.BackgroundColor = System.Drawing.Color.White;
         this.dgvSubClasses.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSubClasses_CellClick);
+        this.dgvSubClasses.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_CellFormatting);
 
         // 
         // tabEnrollments
@@ -384,9 +382,6 @@ partial class Form1
         this.txtStatus.Name = "txtStatus";
         this.txtStatus.Size = new System.Drawing.Size(fieldWidth, 30);
 
-        // Row 3
-
-
         // Row 4
         this.btnSaveEnrollment.Location = new System.Drawing.Point(col1, row4);
         this.btnSaveEnrollment.Name = "btnSaveEnrollment";
@@ -438,18 +433,19 @@ partial class Form1
         this.dgvEnrollments.AllowUserToAddRows = false;
         this.dgvEnrollments.BackgroundColor = System.Drawing.Color.White;
         this.dgvEnrollments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEnrollments_CellClick);
+        this.dgvEnrollments.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_CellFormatting);
 
         // 
-        // Form1
+        // Main
         // 
         this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(1200, 800);
         this.Controls.Add(this.tabControl);
-        this.Name = "Form1";
+        this.Name = "Main";
         this.Text = "OCMS Management System";
         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-        this.Load += new System.EventHandler(this.Form1_Load);
+        this.Load += new System.EventHandler(this.Main_Load);
         
         this.tabControl.ResumeLayout(false);
         this.tabSubClasses.ResumeLayout(false);

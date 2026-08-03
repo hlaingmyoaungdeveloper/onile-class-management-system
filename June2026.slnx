@@ -1,7 +1,7 @@
 <Solution>
   <Project Path="Domain/Domain.csproj" Id="8e58dcaf-58ef-44f8-a7d3-f074b3023acc" />
-  <Project Path="June2026.OCMSDatabase/June2026.OCMSDatabase.csproj" Id="54f24ae5-b2a6-4376-a882-d1c828a113f3" />
-  <Project Path="OCMSWebApi/OCMSWebApi.csproj" Id="e198b026-cb5c-431d-b7ba-373cbf43c3ee" />
-  <Project Path="OCMSConsoleApp/OCMSConsoleApp.csproj" />
-  <Project Path="OCMSWindowForm/OCMSWindowForm.csproj" />
+  <Project Path="June2026.OCMSDatabase/OCMS.Database.csproj" Id="54f24ae5-b2a6-4376-a882-d1c828a113f3" />
+  <Project Path="OCMSWebApi/OCMS.WebApi.csproj" Id="e198b026-cb5c-431d-b7ba-373cbf43c3ee" />
+  <Project Path="OCMSConsoleApp/OCMS.ConsoleApp.csproj" />
+  <Project Path="OCMSWindowForm/OCMS.WindowForm.csproj" />
 </Solution>

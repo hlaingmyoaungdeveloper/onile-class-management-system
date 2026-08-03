@@ -7,29 +7,37 @@ using Domain.models;
 
 namespace OCMSWindowForm;
 
-public partial class Form1 : Form
+public partial class Main : Form
 {
     private SubClassService _subClassService;
     private EnrollmentService _enrollmentService;
 
-    public Form1()
+    public Main()
     {
         InitializeComponent();
         _subClassService = new SubClassService();
         _enrollmentService = new EnrollmentService();
     }
 
-    private void Form1_Load(object sender, EventArgs e)
+    private void Main_Load(object sender, EventArgs e)
     {
         LoadSubClasses();
         LoadEnrollments();
         
-        // Initial state: clear and disable forms until an action is selected
         btnClearSubClass_Click(null, null);
         ToggleSubClassInputs(false);
         
         btnClearEnrollment_Click(null, null);
         ToggleEnrollmentInputs(false);
+    }
+
+    private void dgv_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    {
+        if (sender is DataGridView dgv && dgv.Columns.Contains("NoColumn") && e.ColumnIndex == dgv.Columns["NoColumn"].Index && e.RowIndex >= 0)
+        {
+            e.Value = (e.RowIndex + 1).ToString();
+            e.FormattingApplied = true;
+        }
     }
 
     private void ToggleSubClassInputs(bool enabled)
@@ -64,13 +72,7 @@ public partial class Form1 : Form
             dgv.Columns.Insert(0, noCol);
         }
         
-        // Ensure No column stays on the left even if DataSource recreates bound columns
         dgv.Columns["NoColumn"].DisplayIndex = 0;
-        
-        for (int i = 0; i < dgv.Rows.Count; i++)
-        {
-            dgv.Rows[i].Cells["NoColumn"].Value = (i + 1).ToString();
-        }
     }
 
     private void AddActionColumns(DataGridView dgv)
@@ -108,8 +110,6 @@ public partial class Form1 : Form
         if (response.IsSuccess)
         {
             object dataSource = response.SubClasses;
-            // WORKAROUND: The domain layer currently fails to map SubClassId. 
-            // Since we cannot modify the domain, we retrieve the IDs directly from the database context.
             try
             {
                 using var db = new June2026.OCMSDatabase.AppDbContextModels.AppDbContext();
@@ -136,6 +136,8 @@ public partial class Form1 : Form
                 Console.WriteLine("Could not apply ID workaround: " + ex.Message);
             }
 
+            dgvSubClasses.DataSource = null;
+            dgvSubClasses.Columns.Clear();
             dgvSubClasses.DataSource = dataSource;
             AddActionColumns(dgvSubClasses);
             if (dgvSubClasses.Columns.Contains("SubClassId")) dgvSubClasses.Columns["SubClassId"].Visible = false;
@@ -165,7 +167,6 @@ public partial class Form1 : Form
     {
         if (string.IsNullOrWhiteSpace(txtSelectedSubClassId.Text))
         {
-            // Create
             var req = new SubClassCreateRequestModel
             {
                 ClassName = txtClassName.Text,
@@ -185,7 +186,6 @@ public partial class Form1 : Form
         }
         else
         {
-            // Update
             if (int.TryParse(txtSelectedSubClassId.Text, out int id))
             {
                 var req = new SubClassPatchRequestModel
@@ -214,14 +214,11 @@ public partial class Form1 : Form
         {
             var row = dgvSubClasses.Rows[e.RowIndex];
             
-            // Check if Edit button clicked
             if (dgvSubClasses.Columns.Contains("EditColumn") && e.ColumnIndex == dgvSubClasses.Columns["EditColumn"].Index)
             {
                 txtSelectedSubClassId.Text = row.Cells["SubClassId"].Value?.ToString();
                 txtClassName.Text = row.Cells["ClassName"].Value?.ToString();
                 txtLocation.Text = row.Cells["Location"].Value?.ToString();
-                
-                
                 
                 if (int.TryParse(row.Cells["StudentLimit"].Value?.ToString(), out int limit))
                     numStudentLimit.Value = limit;
@@ -252,7 +249,6 @@ public partial class Form1 : Form
 
                 ToggleSubClassInputs(true);
             }
-            // Check if Delete button clicked
             else if (dgvSubClasses.Columns.Contains("DeleteColumn") && e.ColumnIndex == dgvSubClasses.Columns["DeleteColumn"].Index)
             {
                 if (int.TryParse(row.Cells["SubClassId"].Value?.ToString(), out int id))
@@ -274,7 +270,6 @@ public partial class Form1 : Form
             }
             else
             {
-                // If clicked anywhere else, just show data but don't enable editing
                 ToggleSubClassInputs(false);
             }
         }
@@ -318,6 +313,8 @@ public partial class Form1 : Form
                 Console.WriteLine("Could not apply ID workaround: " + ex.Message);
             }
 
+            dgvEnrollments.DataSource = null;
+            dgvEnrollments.Columns.Clear();
             dgvEnrollments.DataSource = dataSource;
             if (dgvEnrollments.Columns.Contains("EnrollmentId")) dgvEnrollments.Columns["EnrollmentId"].Visible = false;
             
@@ -346,7 +343,6 @@ public partial class Form1 : Form
     {
         if (string.IsNullOrWhiteSpace(txtSelectedEnrollmentId.Text))
         {
-            // Create Enrollment
             if (!int.TryParse(txtEnrSubClassId.Text, out int subClassId))
             {
                 MessageBox.Show("Please enter a valid SubClass ID.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -382,8 +378,6 @@ public partial class Form1 : Form
         {
             var row = dgvEnrollments.Rows[e.RowIndex];
 
-            // Note: DataGridView for enrollments is strictly readonly now (no Edit/Delete buttons per user request)
-            // But if a user clicks a row anyway, we could just display the data for viewing.
             if (dgvEnrollments.Columns.Contains("EnrollmentId"))
                 txtSelectedEnrollmentId.Text = row.Cells["EnrollmentId"].Value?.ToString();
             
@@ -401,10 +395,7 @@ public partial class Form1 : Form
             
             if (dgvEnrollments.Columns.Contains("Status"))
                 txtStatus.Text = row.Cells["Status"].Value?.ToString();
-                
-                
 
-            // Form must be disabled since we cannot edit enrollments
             ToggleEnrollmentInputs(false);
         }
     }

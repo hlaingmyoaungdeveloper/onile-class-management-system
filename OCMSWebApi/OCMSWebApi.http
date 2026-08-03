@@ -1,0 +1,6 @@
+@OCMSWebApi_HostAddress = http://localhost:5167
+
+GET {{OCMSWebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

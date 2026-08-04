@@ -40,7 +40,7 @@ while (true)
                     int index = 1;
                     foreach (var subClass in classes)
                     {
-                        Console.WriteLine($"{index++}. {subClass.ClassName} | Location: {subClass.Location} | Date: {subClass.OpenDate.ToString("dd-MM-yyyy")} | Time: {subClass.OpenTime} | Limit: {subClass.StudentLimit} | Enrolled: {subClass.StudentCount} | Created on {subClass.CreatedDateTime.ToString("dd-MM-yyyy")} | Modified on {subClass.ModifiedDateTime.ToString("dd-MM-yyyy")}");
+                        Console.WriteLine($"{index++}. {subClass.ClassName} | Location: {subClass.Location} | Date: {subClass.OpenDate.ToString("dd-MM-yyyy")} | Time: {subClass.OpenTime} | Limit: {subClass.StudentLimit} | Enrolled: {subClass.StudentCount}");
                     }
                 }
                 else
@@ -56,7 +56,7 @@ while (true)
                     var response = subClassService.GetSubClass(new SubClassEditRequestModel { SubClassId = id2 });
                     if (response.IsSuccess)
                     {
-                        Console.WriteLine($"SubClass: {response.ClassName} | Location: {response.Location} | Date: {response.OpenDate.ToString("dd-MM-yyyy")} | Time: {response.OpenTime} | Limit: {response.StudentLimit} | Enrolled: {response.StudentCount} | Created on {response.CreatedDateTime.ToString("dd-MM-yyyy")} | Modified on {response.ModifiedDateTime.ToString("dd-MM-yyyy")}");
+                        Console.WriteLine($"SubClass: {response.ClassName} | Location: {response.Location} | Date: {response.OpenDate.ToString("dd-MM-yyyy")} | Time: {response.OpenTime} | Limit: {response.StudentLimit} | Enrolled: {response.StudentCount}");
                     }
                     else
                     {
@@ -150,7 +150,7 @@ while (true)
                     int index = 1;
                     foreach (var enrollment in enrolls)
                     {
-                        Console.WriteLine($"{index++}. SubClassId: {enrollment.SubClassId} | Student: {enrollment.StudentName} | Contact: {enrollment.StudentContact} | Payment: {enrollment.PaymentInfo} | Status: {enrollment.Status} | Created on {enrollment.CreatedDateTime.ToString("dd-MM-yyyy")} | Modified on {enrollment.ModifiedDateTime.ToString("dd-MM-yyyy")}");
+                        Console.WriteLine($"{index++}. SubClassId: {enrollment.SubClassId} | Student: {enrollment.StudentName} | Contact: {enrollment.StudentContact} | Payment: {enrollment.PaymentInfo} | Status: {enrollment.Status}");
                     }
                 }
                 else
@@ -166,7 +166,7 @@ while (true)
                     var response = enrollmentService.GetEnrollment(new EnrollmentEditRequestModel { EnrollmentId = enrId });
                     if (response.IsSuccess)
                     {
-                        Console.WriteLine($"Student: {response.StudentName} | Contact: {response.StudentContact} | SubClassId: {response.SubClassId} | Payment: {response.PaymentInfo} | Status: {response.Status} | Created on {response.CreatedDateTime.ToString("dd-MM-yyyy")} | Modified on {response.ModifiedDateTime.ToString("dd-MM-yyyy")}");
+                        Console.WriteLine($"Student: {response.StudentName} | Contact: {response.StudentContact} | SubClassId: {response.SubClassId} | Payment: {response.PaymentInfo} | Status: {response.Status}");
                     }
                     else
                     {

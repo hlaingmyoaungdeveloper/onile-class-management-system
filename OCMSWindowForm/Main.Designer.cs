@@ -38,7 +38,7 @@ partial class Main
     private System.Windows.Forms.TextBox txtSelectedEnrollmentId;
     
     private System.Windows.Forms.Label lblEnrSubClassId;
-    private System.Windows.Forms.TextBox txtEnrSubClassId;
+    private System.Windows.Forms.ComboBox cmbEnrSubClass;
     private System.Windows.Forms.Label lblStudentName;
     private System.Windows.Forms.TextBox txtStudentName;
     private System.Windows.Forms.Label lblStudentContact;
@@ -93,7 +93,7 @@ partial class Main
         
         this.txtSelectedEnrollmentId = new System.Windows.Forms.TextBox();
         this.lblEnrSubClassId = new System.Windows.Forms.Label();
-        this.txtEnrSubClassId = new System.Windows.Forms.TextBox();
+        this.cmbEnrSubClass = new System.Windows.Forms.ComboBox();
         this.lblStudentName = new System.Windows.Forms.Label();
         this.txtStudentName = new System.Windows.Forms.TextBox();
         this.lblStudentContact = new System.Windows.Forms.Label();
@@ -345,9 +345,10 @@ partial class Main
         this.lblEnrSubClassId.Name = "lblEnrSubClassId";
         this.lblEnrSubClassId.Size = new System.Drawing.Size(fieldWidth, 23);
         this.lblEnrSubClassId.Text = "SubClass ID";
-        this.txtEnrSubClassId.Location = new System.Drawing.Point(col1, row1 + 25);
-        this.txtEnrSubClassId.Name = "txtEnrSubClassId";
-        this.txtEnrSubClassId.Size = new System.Drawing.Size(fieldWidth, 30);
+        this.cmbEnrSubClass.Location = new System.Drawing.Point(col1, row1 + 25);
+        this.cmbEnrSubClass.Name = "cmbEnrSubClass";
+        this.cmbEnrSubClass.Size = new System.Drawing.Size(fieldWidth, 30);
+        this.cmbEnrSubClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 
         this.lblStudentName.Location = new System.Drawing.Point(col2, row1);
         this.lblStudentName.Name = "lblStudentName";
@@ -404,7 +405,7 @@ partial class Main
 
         this.gbEnrollmentInput.Controls.Add(this.txtSelectedEnrollmentId);
         this.gbEnrollmentInput.Controls.Add(this.lblEnrSubClassId);
-        this.gbEnrollmentInput.Controls.Add(this.txtEnrSubClassId);
+        this.gbEnrollmentInput.Controls.Add(this.cmbEnrSubClass);
         this.gbEnrollmentInput.Controls.Add(this.lblStudentName);
         this.gbEnrollmentInput.Controls.Add(this.txtStudentName);
         this.gbEnrollmentInput.Controls.Add(this.lblStudentContact);

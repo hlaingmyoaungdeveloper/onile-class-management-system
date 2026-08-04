@@ -152,8 +152,16 @@ public class SubClassService
                 subClass.Location = model.Location;
             }
 
-            if (model.StudentLimit != null && model.StudentLimit > subClass.StudentCount)
+            if (model.StudentLimit != null)
             {
+                if (model.StudentLimit < subClass.StudentCount)
+                {
+                    return new SubClassPatchResponseModel
+                    {
+                        IsSuccess = false,
+                        Message = "Student limit cannot be less than current student count."
+                    };
+                }
                 subClass.StudentLimit = model.StudentLimit;
             }
 

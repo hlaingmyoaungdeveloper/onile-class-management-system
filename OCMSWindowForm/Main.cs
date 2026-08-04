@@ -52,7 +52,7 @@ public partial class Main : Form
 
     private void ToggleEnrollmentInputs(bool enabled)
     {
-        txtEnrSubClassId.Enabled = enabled;
+        cmbEnrSubClass.Enabled = enabled;
         txtStudentName.Enabled = enabled;
         txtStudentContact.Enabled = enabled;
         txtPaymentInfo.Enabled = enabled;
@@ -114,7 +114,7 @@ public partial class Main : Form
             {
                 using var db = new June2026.OCMSDatabase.AppDbContextModels.AppDbContext();
                 var dbClasses = db.TblSubClasses.Where(x => !x.IsDelete).ToList();
-                dataSource = response.SubClasses.Select(sc => 
+                var resolvedClasses = response.SubClasses.Select(sc => 
                 {
                     var match = dbClasses.FirstOrDefault(x => x.ClassName == sc.ClassName && x.Location == sc.Location && x.CreatedDateTime == sc.CreatedDateTime);
                     return new 
@@ -125,11 +125,21 @@ public partial class Main : Form
                         sc.OpenDate,
                         sc.StudentLimit,
                         sc.StudentCount,
-                        sc.OpenTime,
-                        sc.CreatedDateTime,
-                        sc.ModifiedDateTime,
+                        sc.OpenTime
                     };
                 }).ToList();
+                dataSource = resolvedClasses;
+
+                var dropdownList = resolvedClasses.Where(x => x.SubClassId.HasValue).Select(x => new 
+                {
+                    x.SubClassId,
+                    Display = $"{x.ClassName} ({x.Location})"
+                }).ToList();
+                
+                cmbEnrSubClass.DataSource = dropdownList;
+                cmbEnrSubClass.DisplayMember = "Display";
+                cmbEnrSubClass.ValueMember = "SubClassId";
+                cmbEnrSubClass.SelectedIndex = -1;
             }
             catch (Exception ex) 
             {
@@ -302,9 +312,7 @@ public partial class Main : Form
                         en.StudentName,
                         en.StudentContact,
                         en.PaymentInfo,
-                        en.Status,
-                        en.CreatedDateTime,
-                        en.ModifiedDateTime,
+                        en.Status
                     };
                 }).ToList();
             }
@@ -330,7 +338,7 @@ public partial class Main : Form
     private void btnClearEnrollment_Click(object sender, EventArgs e)
     {
         txtSelectedEnrollmentId.Text = string.Empty;
-        txtEnrSubClassId.Text = string.Empty;
+        cmbEnrSubClass.SelectedIndex = -1;
         txtStudentName.Text = string.Empty;
         txtStudentContact.Text = string.Empty;
         txtPaymentInfo.Text = string.Empty;
@@ -343,9 +351,9 @@ public partial class Main : Form
     {
         if (string.IsNullOrWhiteSpace(txtSelectedEnrollmentId.Text))
         {
-            if (!int.TryParse(txtEnrSubClassId.Text, out int subClassId))
+            if (cmbEnrSubClass.SelectedValue == null || !int.TryParse(cmbEnrSubClass.SelectedValue.ToString(), out int subClassId))
             {
-                MessageBox.Show("Please enter a valid SubClass ID.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select a valid SubClass.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -382,7 +390,10 @@ public partial class Main : Form
                 txtSelectedEnrollmentId.Text = row.Cells["EnrollmentId"].Value?.ToString();
             
             if (dgvEnrollments.Columns.Contains("SubClassId"))
-                txtEnrSubClassId.Text = row.Cells["SubClassId"].Value?.ToString();
+            {
+                if (int.TryParse(row.Cells["SubClassId"].Value?.ToString(), out int subClassId))
+                    cmbEnrSubClass.SelectedValue = subClassId;
+            }
             
             if (dgvEnrollments.Columns.Contains("StudentName"))
                 txtStudentName.Text = row.Cells["StudentName"].Value?.ToString();

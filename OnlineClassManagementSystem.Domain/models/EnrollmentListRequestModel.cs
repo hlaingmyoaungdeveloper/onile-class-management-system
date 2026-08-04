@@ -1,4 +1,4 @@
-using OCMS.Database.AppDbContextModels;
+using OnlineClassManagementSystem.Database.AppDbContextModels;
 
 namespace Domain.models;
 

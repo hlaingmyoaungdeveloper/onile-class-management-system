@@ -1,7 +1,7 @@
 <Solution>
-  <Project Path="OCMS.Domain/OCMS.Domain.csproj" Id="8e58dcaf-58ef-44f8-a7d3-f074b3023acc" />
-  <Project Path="OCMS.Database/OCMS.Database.csproj" Id="54f24ae5-b2a6-4376-a882-d1c828a113f3" />
-  <Project Path="OCMS.ConsoleApp/OCMS.ConsoleApp.csproj" />
-  <Project Path="OCMS.WebApi/OCMS.WebApi.csproj" Id="e198b026-cb5c-431d-b7ba-373cbf43c3ee" />
-  <Project Path="OCMS.WinFormsApp/OCMS.WinFormsApp.csproj" />
+  <Project Path="OnlineClassManagementSystem.ConsoleApp/OnlineClassManagementSystem.ConsoleApp.csproj" />
+  <Project Path="OnlineClassManagementSystem.Database/OnlineClassManagementSystem.Database.csproj" Id="54f24ae5-b2a6-4376-a882-d1c828a113f3" />
+  <Project Path="OnlineClassManagementSystem.Domain/OnlineClassManagementSystem.Domain.csproj" Id="8e58dcaf-58ef-44f8-a7d3-f074b3023acc" />
+  <Project Path="OnlineClassManagementSystem.WebApi/OnlineClassManagementSystem.WebApi.csproj" Id="e198b026-cb5c-431d-b7ba-373cbf43c3ee" />
+  <Project Path="OnlineClassManagementSystem.WinFormsApp/OnlineClassManagementSystem.WinFormsApp.csproj" />
 </Solution>

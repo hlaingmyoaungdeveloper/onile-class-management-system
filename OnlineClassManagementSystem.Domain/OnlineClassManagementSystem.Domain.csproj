@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\June2026.OCMSDatabase\OCMS.Database.csproj" />
-    <ProjectReference Include="..\OCMS.Database\OCMS.Database.csproj" />
+    <ProjectReference Include="..\OnlineClassManagementSystem.Database\OnlineClassManagementSystem.Database.csproj" />
   </ItemGroup>
 
 </Project>

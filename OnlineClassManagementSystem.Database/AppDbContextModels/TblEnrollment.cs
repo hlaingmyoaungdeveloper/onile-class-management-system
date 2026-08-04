@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OCMS.Database.AppDbContextModels;
+namespace OnlineClassManagementSystem.Database.AppDbContextModels;
 
 public partial class TblEnrollment
 {

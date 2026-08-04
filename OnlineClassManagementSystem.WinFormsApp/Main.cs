@@ -4,6 +4,7 @@ using System.Linq;
 using Domain.features.SubClass;
 using Domain.features.Enrollment;
 using Domain.models;
+using OnlineClassManagementSystem.Database.AppDbContextModels;
 
 namespace OCMSWindowForm;
 
@@ -126,7 +127,7 @@ public partial class Main : Form
             object dataSource = response.SubClasses;
             try
             {
-                using var db = new OCMS.Database.AppDbContextModels.AppDbContext();
+                using var db = new AppDbContext();
                 var dbClasses = db.TblSubClasses.Where(x => !x.IsDelete).ToList();
                 var resolvedClasses = response.SubClasses.Select(sc => 
                 {
@@ -315,7 +316,7 @@ public partial class Main : Form
             object dataSource = response.Enrollments;
             try
             {
-                using var db = new OCMS.Database.AppDbContextModels.AppDbContext();
+                using var db = new AppDbContext();
                 var dbEnrollments = db.TblEnrollments.ToList();
                 dataSource = response.Enrollments.Select(en => 
                 {

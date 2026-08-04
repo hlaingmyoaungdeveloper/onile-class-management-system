@@ -1,5 +1,5 @@
 using Domain.models;
-using OCMS.Database.AppDbContextModels;
+using OnlineClassManagementSystem.Database.AppDbContextModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

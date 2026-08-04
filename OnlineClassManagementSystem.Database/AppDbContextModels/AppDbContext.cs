@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace OCMS.Database.AppDbContextModels;
+namespace OnlineClassManagementSystem.Database.AppDbContextModels;
 
 public partial class AppDbContext : DbContext
 {

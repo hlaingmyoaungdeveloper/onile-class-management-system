@@ -1,5 +1,5 @@
 using Domain.models;
-using June2026.OCMSDatabase.AppDbContextModels;
+using OCMS.Database.AppDbContextModels;
 
 namespace Domain.features.SubClass;
 

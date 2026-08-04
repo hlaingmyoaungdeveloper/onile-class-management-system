@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace June2026.OCMSDatabase.AppDbContextModels;
+namespace OCMS.Database.AppDbContextModels;
 
 public partial class TblEnrollment
 {
@@ -15,11 +15,11 @@ public partial class TblEnrollment
 
     public string PaymentInfo { get; set; } = null!;
 
-    public string Status { get; set; } = null!;
-
     public DateTime CreatedDateTime { get; set; }
 
     public DateTime ModifiedDateTime { get; set; }
+
+    public string? FatherName { get; set; }
 
     public virtual TblSubClass? SubClass { get; set; }
 }

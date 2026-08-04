@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Domain\OCMS.Domain.csproj" />
+    <ProjectReference Include="..\OCMS.Domain\OCMS.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

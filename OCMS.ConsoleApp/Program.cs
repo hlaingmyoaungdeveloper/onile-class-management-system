@@ -4,14 +4,14 @@ using Domain.models;
 using System;
 using System.Linq;
 
-Console.WriteLine("OCMS Console App Started.");
+Console.WriteLine("Online Class Management System Console App Started.");
 
 var subClassService = new SubClassService();
 var enrollmentService = new EnrollmentService();
 
 while (true)
 {
-    Console.WriteLine("\n--- OCMS Menu ---");
+    Console.WriteLine("\n--- Onilne Class Management System Menu ---");
     Console.WriteLine("1. List SubClasses");
     Console.WriteLine("2. Get SubClass by ID");
     Console.WriteLine("3. Add new SubClass");
@@ -150,7 +150,7 @@ while (true)
                     int index = 1;
                     foreach (var enrollment in enrolls)
                     {
-                        Console.WriteLine($"{index++}. SubClassId: {enrollment.SubClassId} | Student: {enrollment.StudentName} | Contact: {enrollment.StudentContact} | Payment: {enrollment.PaymentInfo} | Status: {enrollment.Status}");
+                        Console.WriteLine($"{index++}. SubClassId: {enrollment.SubClassId} | Student: {enrollment.StudentName} | Contact: {enrollment.StudentContact} | Payment: {enrollment.PaymentInfo} | Father Name: {enrollment.FatherName}");
                     }
                 }
                 else
@@ -166,7 +166,7 @@ while (true)
                     var response = enrollmentService.GetEnrollment(new EnrollmentEditRequestModel { EnrollmentId = enrId });
                     if (response.IsSuccess)
                     {
-                        Console.WriteLine($"Student: {response.StudentName} | Contact: {response.StudentContact} | SubClassId: {response.SubClassId} | Payment: {response.PaymentInfo} | Status: {response.Status}");
+                        Console.WriteLine($"Student: {response.StudentName} | Contact: {response.StudentContact} | SubClassId: {response.SubClassId} | Payment: {response.PaymentInfo} | Father Name: {response.FatherName}");
                     }
                     else
                     {
@@ -188,15 +188,15 @@ while (true)
                 var contact = Console.ReadLine();
                 Console.Write("Payment Info: ");
                 var payment = Console.ReadLine();
-                Console.Write("Status: ");
-                var status = Console.ReadLine();
+                Console.Write("Father Name: ");
+                var fatherName = Console.ReadLine();
                 var enrCreateResponse = enrollmentService.CreateEnrollment(new EnrollmentCreateRequestModel
                 {
                     SubClassId = subId,
                     StudentName = studentName ?? "",
                     StudentContact = contact ?? "",
                     PaymentInfo = payment ?? "",
-                    Status = status ?? ""
+                    FatherName = fatherName
                 });
                 Console.WriteLine(enrCreateResponse.Message);
                 break;

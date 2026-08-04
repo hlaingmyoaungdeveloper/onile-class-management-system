@@ -45,8 +45,8 @@ partial class Main
     private System.Windows.Forms.TextBox txtStudentContact;
     private System.Windows.Forms.Label lblPaymentInfo;
     private System.Windows.Forms.TextBox txtPaymentInfo;
-    private System.Windows.Forms.Label lblStatus;
-    private System.Windows.Forms.TextBox txtStatus;
+    private System.Windows.Forms.Label lblFatherName;
+    private System.Windows.Forms.TextBox txtFatherName;
     private System.Windows.Forms.Button btnSaveEnrollment;
 
     protected override void Dispose(bool disposing)
@@ -100,8 +100,8 @@ partial class Main
         this.txtStudentContact = new System.Windows.Forms.TextBox();
         this.lblPaymentInfo = new System.Windows.Forms.Label();
         this.txtPaymentInfo = new System.Windows.Forms.TextBox();
-        this.lblStatus = new System.Windows.Forms.Label();
-        this.txtStatus = new System.Windows.Forms.TextBox();
+        this.lblFatherName = new System.Windows.Forms.Label();
+        this.txtFatherName = new System.Windows.Forms.TextBox();
         this.btnSaveEnrollment = new System.Windows.Forms.Button();
 
         this.tabControl.SuspendLayout();
@@ -280,6 +280,7 @@ partial class Main
         this.dgvSubClasses.Dock = System.Windows.Forms.DockStyle.Fill;
         this.dgvSubClasses.Location = new System.Drawing.Point(5, 5);
         this.dgvSubClasses.Name = "dgvSubClasses";
+        this.dgvSubClasses.RowHeadersVisible = false;
         this.dgvSubClasses.RowHeadersWidth = 51;
         this.dgvSubClasses.Size = new System.Drawing.Size(1162, 444);
         this.dgvSubClasses.TabIndex = 1;
@@ -287,7 +288,15 @@ partial class Main
         this.dgvSubClasses.MultiSelect = false;
         this.dgvSubClasses.ReadOnly = true;
         this.dgvSubClasses.AllowUserToAddRows = false;
+        this.dgvSubClasses.EnableHeadersVisualStyles = false;
         this.dgvSubClasses.BackgroundColor = System.Drawing.Color.White;
+        
+        System.Windows.Forms.DataGridViewCellStyle cellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+        cellStyle1.BackColor = System.Drawing.Color.Black;
+        cellStyle1.ForeColor = System.Drawing.Color.White;
+        cellStyle1.SelectionBackColor = System.Drawing.Color.Black;
+        cellStyle1.SelectionForeColor = System.Drawing.Color.White;
+        this.dgvSubClasses.ColumnHeadersDefaultCellStyle = cellStyle1;
         this.dgvSubClasses.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSubClasses_CellClick);
         this.dgvSubClasses.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_CellFormatting);
 
@@ -375,13 +384,13 @@ partial class Main
         this.txtPaymentInfo.Name = "txtPaymentInfo";
         this.txtPaymentInfo.Size = new System.Drawing.Size(fieldWidth, 30);
 
-        this.lblStatus.Location = new System.Drawing.Point(col2, row2);
-        this.lblStatus.Name = "lblStatus";
-        this.lblStatus.Size = new System.Drawing.Size(fieldWidth, 23);
-        this.lblStatus.Text = "Status";
-        this.txtStatus.Location = new System.Drawing.Point(col2, row2 + 25);
-        this.txtStatus.Name = "txtStatus";
-        this.txtStatus.Size = new System.Drawing.Size(fieldWidth, 30);
+        this.lblFatherName.Location = new System.Drawing.Point(col2, row2);
+        this.lblFatherName.Name = "lblFatherName";
+        this.lblFatherName.Size = new System.Drawing.Size(fieldWidth, 23);
+        this.lblFatherName.Text = "Father Name";
+        this.txtFatherName.Location = new System.Drawing.Point(col2, row2 + 25);
+        this.txtFatherName.Name = "txtFatherName";
+        this.txtFatherName.Size = new System.Drawing.Size(fieldWidth, 30);
 
         // Row 4
         this.btnSaveEnrollment.Location = new System.Drawing.Point(col1, row4);
@@ -412,8 +421,8 @@ partial class Main
         this.gbEnrollmentInput.Controls.Add(this.txtStudentContact);
         this.gbEnrollmentInput.Controls.Add(this.lblPaymentInfo);
         this.gbEnrollmentInput.Controls.Add(this.txtPaymentInfo);
-        this.gbEnrollmentInput.Controls.Add(this.lblStatus);
-        this.gbEnrollmentInput.Controls.Add(this.txtStatus);
+        this.gbEnrollmentInput.Controls.Add(this.lblFatherName);
+        this.gbEnrollmentInput.Controls.Add(this.txtFatherName);
         this.gbEnrollmentInput.Controls.Add(this.btnSaveEnrollment);
         this.gbEnrollmentInput.Controls.Add(this.btnClearEnrollment);
         this.gbEnrollmentInput.Controls.Add(this.btnLoadEnrollments);
@@ -425,6 +434,7 @@ partial class Main
         this.dgvEnrollments.Dock = System.Windows.Forms.DockStyle.Fill;
         this.dgvEnrollments.Location = new System.Drawing.Point(5, 5);
         this.dgvEnrollments.Name = "dgvEnrollments";
+        this.dgvEnrollments.RowHeadersVisible = false;
         this.dgvEnrollments.RowHeadersWidth = 51;
         this.dgvEnrollments.Size = new System.Drawing.Size(1162, 444);
         this.dgvEnrollments.TabIndex = 1;
@@ -432,7 +442,15 @@ partial class Main
         this.dgvEnrollments.MultiSelect = false;
         this.dgvEnrollments.ReadOnly = true;
         this.dgvEnrollments.AllowUserToAddRows = false;
+        this.dgvEnrollments.EnableHeadersVisualStyles = false;
         this.dgvEnrollments.BackgroundColor = System.Drawing.Color.White;
+        
+        System.Windows.Forms.DataGridViewCellStyle cellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+        cellStyle2.BackColor = System.Drawing.Color.Black;
+        cellStyle2.ForeColor = System.Drawing.Color.White;
+        cellStyle2.SelectionBackColor = System.Drawing.Color.Black;
+        cellStyle2.SelectionForeColor = System.Drawing.Color.White;
+        this.dgvEnrollments.ColumnHeadersDefaultCellStyle = cellStyle2;
         this.dgvEnrollments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEnrollments_CellClick);
         this.dgvEnrollments.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv_CellFormatting);
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace June2026.OCMSDatabase.AppDbContextModels;
+namespace OCMS.Database.AppDbContextModels;
 
 public partial class TblSubClass
 {

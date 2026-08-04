@@ -17,6 +17,9 @@ public partial class Main : Form
         InitializeComponent();
         _subClassService = new SubClassService();
         _enrollmentService = new EnrollmentService();
+        
+        dgvSubClasses.DataBindingComplete += (s, e) => { if (s is DataGridView dgv) dgv.ClearSelection(); };
+        dgvEnrollments.DataBindingComplete += (s, e) => { if (s is DataGridView dgv) dgv.ClearSelection(); };
     }
 
     private void Main_Load(object sender, EventArgs e)
@@ -36,6 +39,10 @@ public partial class Main : Form
         if (sender is DataGridView dgv && dgv.Columns.Contains("NoColumn") && e.ColumnIndex == dgv.Columns["NoColumn"].Index && e.RowIndex >= 0)
         {
             e.Value = (e.RowIndex + 1).ToString();
+            e.CellStyle.ForeColor = System.Drawing.Color.Black;
+            e.CellStyle.BackColor = System.Drawing.Color.White;
+            e.CellStyle.SelectionBackColor = System.Drawing.Color.White;
+            e.CellStyle.SelectionForeColor = System.Drawing.Color.Black;
             e.FormattingApplied = true;
         }
     }
@@ -56,12 +63,13 @@ public partial class Main : Form
         txtStudentName.Enabled = enabled;
         txtStudentContact.Enabled = enabled;
         txtPaymentInfo.Enabled = enabled;
-        txtStatus.Enabled = enabled;
+        txtFatherName.Enabled = enabled;
         btnSaveEnrollment.Enabled = enabled;
     }
 
     private void AddNoColumn(DataGridView dgv)
     {
+        dgv.EnableHeadersVisualStyles = false;
         if (!dgv.Columns.Contains("NoColumn"))
         {
             var noCol = new DataGridViewTextBoxColumn();
@@ -69,6 +77,12 @@ public partial class Main : Form
             noCol.HeaderText = "No.";
             noCol.ReadOnly = true;
             noCol.Width = 50;
+            noCol.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+            noCol.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            noCol.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White;
+            noCol.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            noCol.HeaderCell.Style.BackColor = System.Drawing.Color.Black;
+            noCol.HeaderCell.Style.ForeColor = System.Drawing.Color.White;
             dgv.Columns.Insert(0, noCol);
         }
         
@@ -112,7 +126,7 @@ public partial class Main : Form
             object dataSource = response.SubClasses;
             try
             {
-                using var db = new June2026.OCMSDatabase.AppDbContextModels.AppDbContext();
+                using var db = new OCMS.Database.AppDbContextModels.AppDbContext();
                 var dbClasses = db.TblSubClasses.Where(x => !x.IsDelete).ToList();
                 var resolvedClasses = response.SubClasses.Select(sc => 
                 {
@@ -154,6 +168,7 @@ public partial class Main : Form
             
             AddNoColumn(dgvSubClasses);
             dgvSubClasses.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvSubClasses.ClearSelection();
         }
         else
         {
@@ -300,7 +315,7 @@ public partial class Main : Form
             object dataSource = response.Enrollments;
             try
             {
-                using var db = new June2026.OCMSDatabase.AppDbContextModels.AppDbContext();
+                using var db = new OCMS.Database.AppDbContextModels.AppDbContext();
                 var dbEnrollments = db.TblEnrollments.ToList();
                 dataSource = response.Enrollments.Select(en => 
                 {
@@ -312,7 +327,7 @@ public partial class Main : Form
                         en.StudentName,
                         en.StudentContact,
                         en.PaymentInfo,
-                        en.Status
+                        en.FatherName
                     };
                 }).ToList();
             }
@@ -328,6 +343,7 @@ public partial class Main : Form
             
             AddNoColumn(dgvEnrollments);
             dgvEnrollments.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvEnrollments.ClearSelection();
         }
         else
         {
@@ -342,7 +358,7 @@ public partial class Main : Form
         txtStudentName.Text = string.Empty;
         txtStudentContact.Text = string.Empty;
         txtPaymentInfo.Text = string.Empty;
-        txtStatus.Text = string.Empty;
+        txtFatherName.Text = string.Empty;
         dgvEnrollments.ClearSelection();
         ToggleEnrollmentInputs(true);
     }
@@ -363,7 +379,7 @@ public partial class Main : Form
                 StudentName = txtStudentName.Text,
                 StudentContact = txtStudentContact.Text,
                 PaymentInfo = txtPaymentInfo.Text,
-                Status = txtStatus.Text,
+                FatherName = txtFatherName.Text
             };
             var res = _enrollmentService.CreateEnrollment(req);
             MessageBox.Show(res.Message, "Create Enrollment", MessageBoxButtons.OK, res.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
@@ -403,9 +419,10 @@ public partial class Main : Form
             
             if (dgvEnrollments.Columns.Contains("PaymentInfo"))
                 txtPaymentInfo.Text = row.Cells["PaymentInfo"].Value?.ToString();
+
+            if (dgvEnrollments.Columns.Contains("FatherName"))
+                txtFatherName.Text = row.Cells["FatherName"].Value?.ToString();
             
-            if (dgvEnrollments.Columns.Contains("Status"))
-                txtStatus.Text = row.Cells["Status"].Value?.ToString();
 
             ToggleEnrollmentInputs(false);
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace June2026.OCMSDatabase.AppDbContextModels;
+namespace OCMS.Database.AppDbContextModels;
 
 public partial class AppDbContext : DbContext
 {
@@ -34,15 +34,15 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.CreatedDateTime)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.FatherName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
             entity.Property(e => e.ModifiedDateTime)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.PaymentInfo)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Status)
-                .HasMaxLength(10)
-                .IsFixedLength();
             entity.Property(e => e.StudentContact)
                 .HasMaxLength(50)
                 .IsUnicode(false);

@@ -1,5 +1,5 @@
 using Domain.models;
-using June2026.OCMSDatabase.AppDbContextModels;
+using OCMS.Database.AppDbContextModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +25,7 @@ public class EnrollmentService
                 StudentName = x.StudentName,
                 StudentContact = x.StudentContact,
                 PaymentInfo = x.PaymentInfo,
-                Status = x.Status,
+                FatherName = x.FatherName,
                 CreatedDateTime = x.CreatedDateTime,
                 ModifiedDateTime = x.ModifiedDateTime,
             }).ToList();
@@ -67,7 +67,7 @@ public class EnrollmentService
                 StudentName = enrollment.StudentName,
                 StudentContact = enrollment.StudentContact,
                 PaymentInfo = enrollment.PaymentInfo,
-                Status = enrollment.Status,
+                FatherName = enrollment.FatherName,
                 CreatedDateTime = enrollment.CreatedDateTime,
                 ModifiedDateTime = enrollment.ModifiedDateTime,
             };
@@ -119,7 +119,7 @@ public class EnrollmentService
                 StudentName = model.StudentName,
                 StudentContact = model.StudentContact,
                 PaymentInfo = model.PaymentInfo,
-                Status = model.Status,
+                FatherName = model.FatherName,
                 CreatedDateTime = DateTime.Now,
                 ModifiedDateTime = DateTime.Now,
             };

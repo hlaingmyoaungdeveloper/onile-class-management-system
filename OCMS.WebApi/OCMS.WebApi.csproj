@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Domain\OCMS.Domain.csproj" />
+    <ProjectReference Include="..\OCMS.Domain\OCMS.Domain.csproj" />
   </ItemGroup>
 
 </Project>

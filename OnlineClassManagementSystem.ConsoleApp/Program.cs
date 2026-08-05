@@ -1,13 +1,13 @@
-using Domain.features.SubClass;
-using Domain.features.Enrollment;
 using Domain.models;
 using System;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 Console.WriteLine("Online Class Management System Console App Started.");
 
-var subClassService = new SubClassService();
-var enrollmentService = new EnrollmentService();
+using var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5167/api/") };
 
 while (true)
 {
@@ -30,8 +30,9 @@ while (true)
         switch (choice)
         {
             case "1":
-                var subClassesResponse = subClassService.GetSubClasses(new SubClassListRequestModel());
-                if (subClassesResponse.IsSuccess)
+                var res1 = await httpClient.GetAsync("SubClass");
+                var subClassesResponse = await res1.Content.ReadFromJsonAsync<SubClassListResponseModel>();
+                if (subClassesResponse != null && subClassesResponse.IsSuccess)
                 {
                     Console.WriteLine($"Found {subClassesResponse.SubClasses?.Count ?? 0} subclasses.");
                     
@@ -45,7 +46,7 @@ while (true)
                 }
                 else
                 {
-                    Console.WriteLine($"Error fetching subclasses: {subClassesResponse.Message}");
+                    Console.WriteLine($"Error fetching subclasses: {subClassesResponse?.Message}");
                 }
                 break;
 
@@ -53,14 +54,15 @@ while (true)
                 Console.Write("Enter SubClass ID: ");
                 if (int.TryParse(Console.ReadLine(), out int id2))
                 {
-                    var response = subClassService.GetSubClass(new SubClassEditRequestModel { SubClassId = id2 });
-                    if (response.IsSuccess)
+                    var res2 = await httpClient.GetAsync($"SubClass/{id2}");
+                    var response = await res2.Content.ReadFromJsonAsync<SubClassEditResponseModel>();
+                    if (response != null && response.IsSuccess)
                     {
                         Console.WriteLine($"SubClass: {response.ClassName} | Location: {response.Location} | Date: {response.OpenDate.ToString("dd-MM-yyyy")} | Time: {response.OpenTime} | Limit: {response.StudentLimit} | Enrolled: {response.StudentCount}");
                     }
                     else
                     {
-                        Console.WriteLine(response.Message);
+                        Console.WriteLine(response?.Message ?? "Error.");
                     }
                 }
                 else
@@ -80,15 +82,18 @@ while (true)
                 DateOnly.TryParse(Console.ReadLine(), out DateOnly openDate);
                 Console.Write("Open Time (hh:mm): ");
                 TimeOnly.TryParse(Console.ReadLine(), out TimeOnly openTime);
-                var createResponse = subClassService.CreateSubClass(new SubClassCreateRequestModel
+                
+                var createReq = new SubClassCreateRequestModel
                 {
                     ClassName = className ?? "",
                     Location = location ?? "",
                     StudentLimit = limit,
                     OpenDate = openDate,
                     OpenTime = openTime
-                });
-                Console.WriteLine(createResponse.Message);
+                };
+                var createRes = await httpClient.PostAsJsonAsync("SubClass", createReq);
+                var createResponse = await createRes.Content.ReadFromJsonAsync<SubClassCreateResponseModel>();
+                Console.WriteLine(createResponse?.Message);
                 break;
 
             case "4":
@@ -117,8 +122,9 @@ while (true)
                     if (newDate.HasValue) patchReq.OpenDate = newDate.Value;
                     if (newTime.HasValue) patchReq.OpenTime = newTime.Value;
 
-                    var patchResponse = subClassService.PatchSubClass(editId, patchReq);
-                    Console.WriteLine(patchResponse.Message);
+                    var patchRes = await httpClient.PatchAsJsonAsync($"SubClass/{editId}", patchReq);
+                    var patchResponse = await patchRes.Content.ReadFromJsonAsync<SubClassPatchResponseModel>();
+                    Console.WriteLine(patchResponse?.Message);
                 }
                 else
                 {
@@ -130,8 +136,9 @@ while (true)
                 Console.Write("Enter SubClass ID to delete: ");
                 if (int.TryParse(Console.ReadLine(), out int delId))
                 {
-                    var delResponse = subClassService.DeleteSubClass(new SubClassDeleteRequestModel { SubClassId = delId });
-                    Console.WriteLine(delResponse.Message);
+                    var delRes = await httpClient.DeleteAsync($"SubClass/{delId}");
+                    var delResponse = await delRes.Content.ReadFromJsonAsync<SubClassDeleteResponseModel>();
+                    Console.WriteLine(delResponse?.Message);
                 }
                 else
                 {
@@ -140,8 +147,9 @@ while (true)
                 break;
 
             case "6":
-                var enrollmentsResponse = enrollmentService.GetEnrollments(new EnrollmentListRequestModel());
-                if (enrollmentsResponse.IsSuccess)
+                var res6 = await httpClient.GetAsync("Enrollment");
+                var enrollmentsResponse = await res6.Content.ReadFromJsonAsync<EnrollmentListResponseModel>();
+                if (enrollmentsResponse != null && enrollmentsResponse.IsSuccess)
                 {
                     Console.WriteLine($"Found {enrollmentsResponse.Enrollments?.Count ?? 0} enrollments.");
                     
@@ -155,7 +163,7 @@ while (true)
                 }
                 else
                 {
-                    Console.WriteLine($"Error fetching enrollments: {enrollmentsResponse.Message}");
+                    Console.WriteLine($"Error fetching enrollments: {enrollmentsResponse?.Message}");
                 }
                 break;
 
@@ -163,14 +171,15 @@ while (true)
                 Console.Write("Enter Enrollment ID: ");
                 if (int.TryParse(Console.ReadLine(), out int enrId))
                 {
-                    var response = enrollmentService.GetEnrollment(new EnrollmentEditRequestModel { EnrollmentId = enrId });
-                    if (response.IsSuccess)
+                    var res7 = await httpClient.GetAsync($"Enrollment/{enrId}");
+                    var response = await res7.Content.ReadFromJsonAsync<EnrollmentEditResponseModel>();
+                    if (response != null && response.IsSuccess)
                     {
                         Console.WriteLine($"Student: {response.StudentName} | Contact: {response.StudentContact} | SubClassId: {response.SubClassId} | Payment: {response.PaymentInfo} | Father Name: {response.FatherName}");
                     }
                     else
                     {
-                        Console.WriteLine(response.Message);
+                        Console.WriteLine(response?.Message ?? "Error.");
                     }
                 }
                 else
@@ -190,15 +199,20 @@ while (true)
                 var payment = Console.ReadLine();
                 Console.Write("Father Name: ");
                 var fatherName = Console.ReadLine();
-                var enrCreateResponse = enrollmentService.CreateEnrollment(new EnrollmentCreateRequestModel
+                
+                var enrCreateReq = new EnrollmentCreateRequestModel
                 {
                     SubClassId = subId,
                     StudentName = studentName ?? "",
                     StudentContact = contact ?? "",
                     PaymentInfo = payment ?? "",
                     FatherName = fatherName
-                });
-                Console.WriteLine(enrCreateResponse.Message);
+                };
+                
+                var enrRes = await httpClient.PostAsJsonAsync("Enrollment", enrCreateReq);
+                var enrCreateResponse = await enrRes.Content.ReadFromJsonAsync<EnrollmentCreateResponseModel>();
+                
+                Console.WriteLine(enrCreateResponse?.Message);
                 break;
 
             case "9":
